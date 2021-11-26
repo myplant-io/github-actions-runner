@@ -42,6 +42,12 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg > /etc/apt/trusted.g
     apt-get -y clean && \
     rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+# Install java-11 JDK
+RUN wget -qO - "https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public" | apt-key add - && \
+    add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ && \
+    apt-get update && \
+    apt-get -y install adoptopenjdk-11-hotspot=\*
+
 # Copy scripts.
 COPY scripts/ /usr/local/bin/
 
