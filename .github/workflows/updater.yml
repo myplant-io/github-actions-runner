@@ -8,12 +8,12 @@ jobs:
   check-for-updates:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2.4.0
+    - uses: actions/checkout@v3
 
     - name: Check for updates
       id: update
       run: |
-        version=$(curl --silent https://api.github.com/repos/actions/virtual-environments/releases | \
+        version=$(curl --location --silent https://api.github.com/repos/actions/virtual-environments/releases | \
           jq -r 'map(select(.tag_name|startswith("ubuntu20"))|.tag_name)[0]')
 
         echo ::set-output name=version::$version
@@ -22,7 +22,7 @@ jobs:
         fi
 
     - name: Create PR
-      uses: peter-evans/create-pull-request@v3
+      uses: peter-evans/create-pull-request@v4
       with:
         branch: "virtualenv/bump-${{ steps.update.outputs.version }}"
         title: "Bump virtualenv to ${{ steps.update.outputs.version }}"
