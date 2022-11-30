@@ -44,17 +44,17 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg > /etc/apt/trusted.g
     rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install java-11 JDK
-RUN wget -qO - "https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public" | apt-key add - && \
-    add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ && \
-    apt-get update && \
-    apt-get -y install adoptopenjdk-11-hotspot=\*
+#RUN wget -qO - "https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public" | apt-key add - && \
+#    add-apt-repository --yes https://adoptopenjdk.jfrog.io/adoptopenjdk/deb/ && \
+#    apt-get update && \
+#    apt-get -y install adoptopenjdk-11-hotspot=\*
 
 # Copy scripts.
 COPY scripts/ /usr/local/bin/
 
 # Install additional distro packages and runner virtual envs
 ARG VIRTUAL_ENV_PACKAGES=""
-ARG VIRTUAL_ENV_INSTALLS="basic python aws azure-cli docker-compose nodejs"
+ARG VIRTUAL_ENV_INSTALLS="basic java-tools python aws azure-cli docker-compose nodejs sbt kotlin"
 RUN apt-get -y update && \
     ( [ -z "$VIRTUAL_ENV_PACKAGES" ] || apt-get -y --no-install-recommends install $VIRTUAL_ENV_PACKAGES ) && \
     . /usr/local/bin/install-from-virtual-env-helpers && \
