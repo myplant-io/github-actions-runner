@@ -1,4 +1,4 @@
-FROM quay.io/evryfs/base-ubuntu:focal-20221130
+FROM ubuntu:focal
 
 # This the release tag of virtual-environments: https://github.com/actions/virtual-environments/releases
 ARG UBUNTU_VERSION=2004
@@ -21,6 +21,7 @@ RUN apt-get update && \
     rsync \
     wget \
     jq=1.* \
+    curl \
     amazon-ecr-credential-helper=0.3.* && \
     apt-get -y clean && \
     rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -31,7 +32,7 @@ RUN echo "runner ALL= EXEC: NOPASSWD:ALL" >> /etc/sudoers.d/runner
 # Update git.
 RUN add-apt-repository -y ppa:git-core/ppa && \
     apt-get update && \
-    apt-get -y install --no-install-recommends git=1:2.38.* && \
+    apt-get -y install --no-install-recommends git=1:2.39.* && \
     apt-get -y clean && \
     rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
@@ -54,7 +55,7 @@ COPY scripts/ /usr/local/bin/
 
 # Install additional distro packages and runner virtual envs
 ARG VIRTUAL_ENV_PACKAGES=""
-ARG VIRTUAL_ENV_INSTALLS="basic java-tools python aws azure-cli docker-compose nodejs sbt kotlin"
+ARG VIRTUAL_ENV_INSTALLS="basic java-tools python aws azure-cli github-cli docker-compose nodejs sbt kotlin"
 RUN apt-get -y update && \
     ( [ -z "$VIRTUAL_ENV_PACKAGES" ] || apt-get -y --no-install-recommends install $VIRTUAL_ENV_PACKAGES ) && \
     . /usr/local/bin/install-from-virtual-env-helpers && \
