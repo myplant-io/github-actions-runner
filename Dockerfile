@@ -25,6 +25,7 @@ RUN apt-get update && \
     wget \
     jq \
     curl \
+    libnss3 libnss3-dev \
     amazon-ecr-credential-helper && \
     apt-get -y clean && \
     rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
