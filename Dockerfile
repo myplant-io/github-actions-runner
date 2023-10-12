@@ -2,7 +2,7 @@ FROM ubuntu:22.04
 
 # This the release tag of virtual-environments: https://github.com/actions/virtual-environments/releases
 ARG UBUNTU_VERSION=2204
-ARG VIRTUAL_ENVIRONMENT_VERSION=ubuntu22/20230426.1
+ARG VIRTUAL_ENVIRONMENT_VERSION=ubuntu22/20231005.3
 
 ENV UBUNTU_VERSION=${UBUNTU_VERSION} VIRTUAL_ENVIRONMENT_VERSION=${VIRTUAL_ENVIRONMENT_VERSION}
 #ENV DEBIAN_FRONTEND noninteractive
@@ -26,6 +26,7 @@ RUN apt-get update && \
     jq \
     curl \
     libnss3 libnss3-dev \
+    zip unzip \
     amazon-ecr-credential-helper && \
     apt-get -y clean && \
     rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -36,7 +37,7 @@ RUN echo "runner ALL= EXEC: NOPASSWD:ALL" >> /etc/sudoers.d/runner
 # Update git.
 RUN add-apt-repository -y ppa:git-core/ppa && \
     apt-get update && \
-    apt-get -y install --no-install-recommends git=1:2.40.* && \
+    apt-get -y install --no-install-recommends git=1:2.42.* && \
     apt-get -y clean && \
     rm -rf /var/cache/apt /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
