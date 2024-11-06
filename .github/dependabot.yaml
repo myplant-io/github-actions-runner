@@ -8,8 +8,3 @@ updates:
   directory: "/"
   schedule:
     interval: daily
-- package-ecosystem: docker
-  directory: "/"
-  schedule:
-    interval: daily
-  target-branch: myoung34-derivate

@@ -1,4 +1,5 @@
 name: Check Virtualenv
+
 on:
   schedule:
     - cron: "0 0 * * *"
@@ -8,7 +9,7 @@ jobs:
   check-for-updates:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
     - name: Check for updates
       id: update
@@ -33,4 +34,3 @@ jobs:
           owners
           maintainers
         draft: False
-        
